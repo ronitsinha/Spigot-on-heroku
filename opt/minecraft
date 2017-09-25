@@ -38,7 +38,7 @@ echo " done"
 
 sleep 3  
 echo "-----> Starting Dropbox Sync..."
-curl http://sv.ggjohny.ga/backup.zip
+wget http://sv.ggjohny.ga/backup.zip
 unzip backup
 rm backup.zip
 eval "while true; do sleep 120; curl -v -u 	b22_20500537:kimbang012 ftp://185.27.134.11/backup.zip -Q "DELE backup.zip"; rm backup.zip; zip -r backup world world_nether world_the_end plugins spigot.yml banned-ips.json banned-players.json whitelist.json permissions.yml ops.json; curl -T backup.zip ftp://b22_20500537:kimbang012@185.27.134.11/sv.ggjohny.ga/htdocs/; done &"
