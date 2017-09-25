@@ -41,7 +41,7 @@ echo "-----> Starting Dropbox Sync..."
 curl -O https://aemine.vn/backup.zip
 unzip backup
 rm backup.zip
-eval "while true; do sleep 120; curl -v -u ftp://aeminevn:AEmine@123@103.200.22.222/backup.zip -Q "DELE backup.zip"; rm backup.zip; zip -r backup world world_nether world_the_end plugins spigot.yml banned-ips.json banned-players.json whitelist.json permissions.yml ops.json; curl -T backup.zip ftp://aeminevn:AEmine@123@103.200.22.222/sv.ggjohny.ga/htdocs/; done &"
+eval "while true; do sleep 120; curl -v -u aeminevn:AEmine@123 ftp://103.200.22.222/backup.zip -Q "DELE backup.zip"; rm backup.zip; zip -r backup world world_nether world_the_end plugins spigot.yml banned-ips.json banned-players.json whitelist.json permissions.yml ops.json; curl -T backup.zip aeminevn:AEmine@123 ftp://@103.200.22.222/sv.ggjohny.ga/htdocs/; done &"
 echo " done"
 
 # Do an inline sync first, then start the background job
