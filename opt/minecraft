@@ -75,6 +75,7 @@ esac
 # dont worry if error R14 appear. unless you reach 1GB. server will stop.
 
 echo "-----> Starting: Spigot on port ${mc_port}"
+echo "To run a command into the server screen session, use: screen -S minecraft -X eval 'stuff \"SERVER_COMMAND_HERE\015\"'"
 eval "screen -L -h 2048 -dmS minecraft java -Xmx${heap} -Xms${heap} -jar spigot.jar nogui"
 main_pid=$!
 
