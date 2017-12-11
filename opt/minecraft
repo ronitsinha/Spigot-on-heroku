@@ -37,8 +37,8 @@ echo " done"
 
 sleep 3  
 echo "-----> Starting Dropbox Sync..."
-./dropbox_uploader.sh download spigot-mc/backup.zip
-yes | unzip backup.zip
+#./dropbox_uploader.sh download spigot-mc/backup.zip
+#yes | unzip backup.zip
 
 # Do an inline sync first, then start the background job
 echo "-----> Start sync to AWS..."
@@ -98,6 +98,13 @@ screen -X "logfile 1" && sleep 1
 echo "Tailing log"
 #eval "tail -f screenlog.0 &"
 tail_pid=$!
+
+echo Backing up data...
+rm -f backup.zip
+zip -r backup.zip . -x .git/\* .jdk/\* .heroku/\*
+echo Zipped server folder as backup.zip
+./dropbox_uploader.sh delete spigot-mc/backup.zip
+./dropbox_uploader.sh upload backup.zip spigot-mc/
 
 trap "kill $ngrok_pid $main_pid $sync_pid $tail_pid $dropbox_pid" SIGTERM
 trap "kill -300 $ngrok_pid $main_pid $sync_pid $tail_pid $dropbox_pid exit" SIGKILL
