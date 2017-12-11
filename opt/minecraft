@@ -37,8 +37,8 @@ echo " done"
 
 sleep 3  
 echo "-----> Starting Dropbox Sync..."
-#./dropbox_uploader.sh download spigot-mc/backup.zip
-#yes | unzip backup.zip
+./dropbox_uploader.sh download spigot-mc/backup.zip
+yes | unzip backup.zip
 
 # Do an inline sync first, then start the background job
 echo "-----> Start sync to AWS..."
