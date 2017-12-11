@@ -48,16 +48,16 @@ sync_pid=$!
 
 echo "-----> Configuring server settings..."
 # accept eula
-echo eula=true > eula.txt
+#echo eula=true > eula.txt
 # create server config - change anything if you want
-echo "server-port=${mc_port}" >> /app/server.properties
-echo "server-ip=127.0.0.1" >> /app/server.properties # add public ip to server
+#echo "server-port=${mc_port}" >> /app/server.properties
+#echo "server-ip=127.0.0.1" >> /app/server.properties # add public ip to server
 # disable online mode for cracked players
-echo "online-mode=false" >> /app/server.properties
-touch whitelist.json
-touch banned-players.json
-touch banned-ips.json
-touch ops.json
+#echo "online-mode=false" >> /app/server.properties
+#touch whitelist.json
+#touch banned-players.json
+#touch banned-ips.json
+#touch ops.json
 
 echo "-----> Scaling dyno..."
 limit=$(ulimit -u)
@@ -77,6 +77,13 @@ esac
 echo "-----> Starting: Spigot on port ${mc_port}"
 eval "screen -L -h 2048 -dmS minecraft java -Xmx${heap} -Xms${heap} -jar spigot.jar nogui"
 main_pid=$!
+
+echo Backing up data...
+rm -f backup.zip
+zip -r backup.zip . -x .git/\* .jdk/\* .heroku/\*
+echo Zipped server folder as backup.zip
+./dropbox_uploader.sh delete spigot-mc/backup.zip
+./dropbox_uploader.sh upload backup.zip spigot-mc/
 
 echo "-----> Loading libraries... "
 
@@ -98,13 +105,6 @@ screen -X "logfile 1" && sleep 1
 echo "Tailing log"
 #eval "tail -f screenlog.0 &"
 tail_pid=$!
-
-echo Backing up data...
-rm -f backup.zip
-zip -r backup.zip . -x .git/\* .jdk/\* .heroku/\*
-echo Zipped server folder as backup.zip
-./dropbox_uploader.sh delete spigot-mc/backup.zip
-./dropbox_uploader.sh upload backup.zip spigot-mc/
 
 trap "kill $ngrok_pid $main_pid $sync_pid $tail_pid $dropbox_pid" SIGTERM
 trap "kill -300 $ngrok_pid $main_pid $sync_pid $tail_pid $dropbox_pid exit" SIGKILL
