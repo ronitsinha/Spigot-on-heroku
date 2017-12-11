@@ -29,9 +29,7 @@ Next, simply copy the following lines to your Command Promt (cmd)
 ```
 heroku create
 heroku buildpacks:add heroku/jvm
-heroku buildpacks:add https://github.com/kimbang012/Spigot-on-heroku
-heroku ps:exec
-git commit -m "Heroku Exec" --allow-empty
+heroku buildpacks:add https://github.com/ronitsinha/Spigot-on-heroku
 done
 ```
 
@@ -46,6 +44,8 @@ $ heroku config:set DBCONFIG="xxxxx"
 Then copy these commands in the cmd
 
 ```
+git add .
+git commit -m "Initial commit" --allow-empty
 git push heroku master
 heroku ps:scale worker=1
 done
@@ -53,7 +53,7 @@ done
 
 And your done!
 
-Go [here](https://dashboard.ngrok.com/status/) to check your server ip.
+Go [here](https://dashboard.ngrok.com/status) to check your server ip.
 
 ## Files sync
 
@@ -61,9 +61,7 @@ The Heroku filesystem is ephemeral, which means files written to the file system
 
 Minecraft keeps all of the data for the server in flat files on the file system. Thus, if you want to keep you world, you'll need to sync it to Dropbox or AWS S3.
 
-By defaule, dropbox sync will automatic backup your data every 5 minutes.
-
-You can add Amazon S3 to sync your datas
+You can add Amazon S3 to sync your data
 
 First, create an AWS account and an S3 bucket. Then configure the bucket and your AWS keys like this:
 
